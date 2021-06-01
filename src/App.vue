@@ -1,51 +1,64 @@
 <template>
   <el-container class="mainContainer">
-
     <el-aside width="200px">
       <TheMenu />
     </el-aside>
 
     <el-container>
-      
       <el-header height="60px">
-        <TheTopTask />
+        <TheTopTask @newTask="addTask($event)" />
       </el-header>
 
       <el-main>
         <TaskList :tasks="tasks" />
       </el-main>
-
     </el-container>
-
   </el-container>
 </template>
 
 <script>
-  import TheMenu from './components/TheMenu.vue'
-  import TheTopTask from './components/TheTopTask.vue'
-  import TaskList from './components/TaskList.vue'
+import TheMenu from "./components/TheMenu.vue";
+import TheTopTask from "./components/TheTopTask.vue";
+import TaskList from "./components/TaskList.vue";
 
-  export default {
-    components: {
-      TheMenu,
-      TheTopTask,
-      TaskList
+export default {
+  components: {
+    TheMenu,
+    TheTopTask,
+    TaskList,
+  },
+  data() {
+    const sample = {
+      name: 'Développement de la feature "edit" d\'un tweet',
+      startTime: "01/03/2021",
+      endTime: "00:43:13",
+    };
+    return {
+      taskID: 0,
+      tasks: Array(20).fill(sample),
+    };
+  },
+  methods: {
+    addTask({ name, startTime }) {
+      this.tasks.unshift({
+        id: this.getAnId,
+        name,
+        startTime,
+        endTime: Date.now(),
+      });
     },
-    data() {
-      const sample = {
-        name: 'Développement de la feature "edit" d\'un tweet',
-        startTime: '01/03/2021',
-        endTime: '00:43:13',
-      };
-      return {
-        tasks: Array(20).fill(sample)
-      }
+    getAnID () {
+      this.taskID++
+      return this.taskID
     }
-  };
+  },
+};
 </script>
 
 <style lang="scss">
-body { margin: 0; }
+body {
+  margin: 0;
+}
 #app {
   position: absolute;
   top: 0;
@@ -58,7 +71,9 @@ body { margin: 0; }
   text-align: center;
   color: #2c3e50;
 }
-.mainContainer { height: 100%; }
+.mainContainer {
+  height: 100%;
+}
 
 .el-aside {
   height: 100%;
@@ -74,5 +89,4 @@ body { margin: 0; }
     border: none !important;
   }
 }
-
 </style>
