@@ -1,64 +1,75 @@
 <template>
-  <el-table
-    :data="tasks"
-    stripe
-    style="width: 100%">
+  <el-table :data="tasks" stripe row-key="id" style="width: 100%">
+    <el-table-column prop="name" label="Tâche"> </el-table-column>
 
-    <el-table-column
-      prop="name"
-      label="Tâche">
-    </el-table-column>
-
-    <el-table-column
-      align="right"
-      prop="startTime"
-      label="Début et fin"
-      width="100">
+    <el-table-column align="right" label="Début et fin" width="150">
       <template #header></template>
-    </el-table-column>
-
-    <el-table-column
-      align="right"
-      prop="endTime"
-      label="Durée"
-      width="100">
-      <template #header></template>
-    </el-table-column>
-
-    <el-table-column
-      align="right"
-      label="Actions"
-      width="200">      
-      <template #header></template>
-      <template #default="scope">
-        <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)">Editer</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">Supprimer</el-button>
+      <template #default>
+        {{ Date.now() }}
       </template>
     </el-table-column>
-    
+
+    <el-table-column align="right" label="Durée" width="100">
+      <template #header></template>
+      <template #default="scope">
+        {{ durationBetweenTimestamps(scope.row.startTime, scope.row.endTime) }}
+      </template>
+    </el-table-column>
+
+    <el-table-column align="right" label="Actions" width="200">
+      <template #header></template>
+      <template #default="scope">
+        <TaskListActions
+          :taskID="scope.row.id"
+          @restart="sendRestart"
+          @delete="sendDelete"
+        />
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
 <script>
-  export default {
-    props: {
-      tasks: {
-        type: Array,
-        default: []
-      }
+import TaskListActions from "./TaskListActions.vue";
+export default {
+  components: {
+    TaskListActions,
+  },
+  data() {
+    return {
+      tsFormatter: Intl.DateTimeFormat("fr", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
+  },
+  props: {
+    tasks: {
+      type: Array,
+      default: [],
     },
-    methods: {
-      handleEdit(index, row) {
-        console.log(index, row);
-      },
-      handleDelete(index, row) {
-        console.log(index, row);
-      }
-    }
-  }
+  },
+  methods: {
+    formatTimestamp(ts) {
+      return this.tsFormatter.format(ts);
+    },
+    durationBetweenTimestamps(start, end) {
+      let seconds = Math.floor(end / 1000 - start / 1000);
+      let minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      seconds = seconds % 60;
+      minutes = minutes % 60;
+      return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+        2,
+        "0"
+      )}:${String(seconds).padStart(2, "0")}`;
+    },
+    sendRestart(data) {
+      this.$emit("restart", data);
+    },
+    sendDelete(data) {
+      this.$emit("delete", data);
+    },
+  },
+};
 </script>

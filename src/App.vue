@@ -3,6 +3,9 @@
     <el-aside width="200px">
       <TheMenu />
     </el-aside>
+    <el-container width="300px">
+    <Test />
+    </el-container>
 
     <el-container>
       <el-header height="60px">
@@ -11,6 +14,7 @@
 
       <el-main>
         <TaskList :tasks="tasks" />
+        <Tes />
       </el-main>
     </el-container>
   </el-container>
@@ -20,22 +24,20 @@
 import TheMenu from "./components/TheMenu.vue";
 import TheTopTask from "./components/TheTopTask.vue";
 import TaskList from "./components/TaskList.vue";
+import Tes from "./components/Tes.vue"
+
 
 export default {
   components: {
     TheMenu,
     TheTopTask,
     TaskList,
+    Tes
   },
   data() {
-    const sample = {
-      name: 'Développement de la feature "edit" d\'un tweet',
-      startTime: "01/03/2021",
-      endTime: "00:43:13",
-    };
     return {
       taskID: 0,
-      tasks: Array(20).fill(sample),
+      tasks: []
     };
   },
   methods: {
