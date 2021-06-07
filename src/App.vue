@@ -4,16 +4,16 @@
       <TheMenu />
     </el-aside>
     <el-container width="300px">
-    <Test />
+      <Test />
     </el-container>
 
     <el-container>
       <el-header height="60px">
-        <TheTopTask @newTask="addTask($event)" />
+        <TheTopTask ref="TheTopTask" @newTask="addTask($event)" />
       </el-header>
 
       <el-main>
-        <TaskList :tasks="tasks" />
+        <TaskList :tasks="tasks" @restart="sendRestartTask" @delete="deleteTask" />
         <Tes />
       </el-main>
     </el-container>
@@ -24,20 +24,19 @@
 import TheMenu from "./components/TheMenu.vue";
 import TheTopTask from "./components/TheTopTask.vue";
 import TaskList from "./components/TaskList.vue";
-import Tes from "./components/Tes.vue"
-
+import Tes from "./components/Tes.vue";
 
 export default {
   components: {
     TheMenu,
     TheTopTask,
     TaskList,
-    Tes
+    Tes,
   },
   data() {
     return {
       taskID: 0,
-      tasks: []
+      tasks: [],
     };
   },
   methods: {
@@ -49,10 +48,33 @@ export default {
         endTime: Date.now(),
       });
     },
-    getAnID () {
-      this.taskID++
-      return this.taskID
-    }
+    getAnID() {
+      this.taskID++;
+      return this.taskID;
+    },
+    sendRestartTask(TaskID) {
+      // Récupération du nom de l'ancienne tâche
+      let newTaskname = null;
+      this.tasks.forEach((task) => {
+        if (task.id === TaskID) {
+          newTaskname = task.name;
+        }
+      })
+      //Relancement de la tache
+      this.$refs.TheTopTask.restartTask(newTaskname)
+    },
+    deleteTask(taskID) {
+      // Récupération de l'index de la tâche
+      let taskIndex = null;
+      this.tasks.forEach((task, index) => {
+        if (task.id === taskID) {
+          taskIndex = index;
+        }
+      });
+
+      // Suppression de la tâche
+      this.tasks.splice(taskIndex, 1);
+    },
   },
 };
 </script>
