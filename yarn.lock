@@ -21,6 +21,18 @@
     "lodash" "^4.17.19"
     "to-fast-properties" "^2.0.0"
 
+"@lukeed/csprng@^1.0.0":
+  "integrity" "sha512-ruuGHsnabmObBdeMg3vKdGRmh06Oog3eFpf/Tk6X0kDSJDpJTDCj2dqdp1+0VjzIUgHlFF9GBm7uFqfYhhdX9g=="
+  "resolved" "https://registry.npmjs.org/@lukeed/csprng/-/csprng-1.0.0.tgz"
+  "version" "1.0.0"
+
+"@lukeed/uuid@^2.0.0":
+  "integrity" "sha512-dUz8OmYvlY5A9wXaroHIMSPASpSYRLCqbPvxGSyHguhtTQIy24lC+EGxQlwv71AhRCO55WOtgwhzQLpw27JaJQ=="
+  "resolved" "https://registry.npmjs.org/@lukeed/uuid/-/uuid-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "@lukeed/csprng" "^1.0.0"
+
 "@popperjs/core@^2.4.4":
   "integrity" "sha512-DvJbbn3dUgMxDnJLH+RZQPnXak1h4ZVYQ7CWiFWjQwBFkVajT4rfw2PdpHLTSTwxrYfnoEXkuBiwkDm6tPMQeA=="
   "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.9.1.tgz"

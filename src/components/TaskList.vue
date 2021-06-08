@@ -21,8 +21,10 @@
       <template #default="scope">
         <TaskListActions
           :taskID="scope.row.id"
+          @copyTaskname="copyToClipboard(scope.row.name)"
           @restart="sendRestart"
           @delete="sendDelete"
+
         />
       </template>
     </el-table-column>
@@ -70,6 +72,9 @@ export default {
     sendDelete(data) {
       this.$emit("delete", data);
     },
+    copyToClipboard(text) {
+      navigator.clipboard.writeText(text)
+    }
   },
 };
 </script>

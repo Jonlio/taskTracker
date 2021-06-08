@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { v4 as uuid } from '@lukeed/uuid';
 import TheMenu from "./components/TheMenu.vue";
 import TheTopTask from "./components/TheTopTask.vue";
 import TaskList from "./components/TaskList.vue";
@@ -35,22 +36,17 @@ export default {
   },
   data() {
     return {
-      taskID: 0,
       tasks: [],
     };
   },
   methods: {
     addTask({ name, startTime }) {
       this.tasks.unshift({
-        id: this.getAnId,
+        id: uuid(),
         name,
         startTime,
         endTime: Date.now(),
       });
-    },
-    getAnID() {
-      this.taskID++;
-      return this.taskID;
     },
     sendRestartTask(TaskID) {
       // Récupération du nom de l'ancienne tâche
