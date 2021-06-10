@@ -13,7 +13,7 @@
       </el-header>
 
       <el-main>
-        <TaskList :tasks="tasks" @restart="sendRestartTask" @delete="deleteTask" />
+        <TaskList :tasks="tasks" :areTasksLoading="areTasksLoading" @restart="sendRestartTask" @delete="deleteTask" />
         <Tes />
       </el-main>
     </el-container>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import * as TaskService from './services/TaskService.js';
 import { v4 as uuid } from '@lukeed/uuid';
 import TheMenu from "./components/TheMenu.vue";
 import TheTopTask from "./components/TheTopTask.vue";
@@ -37,6 +38,7 @@ export default {
   data() {
     return {
       tasks: [],
+      areTasksLoading: true
     };
   },
   methods: {
@@ -72,6 +74,15 @@ export default {
       this.tasks.splice(taskIndex, 1);
     },
   },
+  async created () {
+      // Récupération de toutes les tâches
+      try {
+        this.tasks = await TaskService.getAll()
+      } catch (e) {
+        console.error(e)
+      }
+      this.areTasksLoading = false
+    }
 };
 </script>
 

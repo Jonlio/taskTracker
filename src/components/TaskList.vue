@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tasks" stripe row-key="id" style="width: 100%">
+  <el-table :data="tasks" stripe row-key="id" style="width: 100%" v-loading="areTasksLoading">
     <el-table-column prop="name" label="Tâche"> </el-table-column>
 
     <el-table-column align="right" label="Début et fin" width="150">
@@ -49,6 +49,10 @@ export default {
     tasks: {
       type: Array,
       default: [],
+    },
+    areTasksLoading: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
