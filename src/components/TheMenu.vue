@@ -1,5 +1,5 @@
 <template>
-  <el-menu  :router="true" default-active="/">
+  <el-menu  :router="true" :default-active="$route.path">
 
     <h3>Vue Tracker</h3>
 

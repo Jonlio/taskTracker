@@ -6,10 +6,12 @@
     empty-text="Aucune tâche"
     style="width: 100%"
     v-loading="areTasksLoading"
+    ref="table"
     >
 
     <el-table-column
       prop="name"
+      sort-by="startTime"
       label="Tâche">
     </el-table-column>
 
@@ -65,16 +67,6 @@
         tsFormatter: Intl.DateTimeFormat('fr', { hour: '2-digit', minute: '2-digit' })
       }
     },
-    props: {
-      tasks: {
-        type: Array,
-        default: []
-      },
-      areTasksLoading: {
-        type: Boolean,
-        default: false
-      }
-    },
     methods: {
       formatTimestamp (ts) {
         return Date.now()
@@ -96,6 +88,10 @@
       copyToClipboard(text) {
         navigator.clipboard.writeText(text)
       }
-    }
+    },
+    mounted () {
+      const sortBy = (this.$root.query.sortBy === 'ascending') ? 'ascending' : 'descending';
+      this.$refs.table.sort('name', sortBy);
+    },
   }
 </script>
