@@ -1,4 +1,3 @@
-  
 <template>
 
   <el-select v-model="sortBy" placeholder="Ordre des tâches">
@@ -65,6 +64,7 @@
 
 <script>
   import TaskListActions from './TaskListActions.vue'
+
   export default {
     components: {
       TaskListActions

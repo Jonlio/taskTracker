@@ -2,24 +2,24 @@
   <div>
     <h1>Accueil</h1>
     <TaskList
-          :tasks="tasks || []"
-          :areTasksLoading="areTasksLoading"
-          v-on="{
-            restart: sendRestart,
-            delete: senddelete,
-          }"
-        />
+      :tasks="tasks || []"
+      :areTasksLoading="areTasksLoading"       
+      v-on="{
+        restart: sendRestart,
+        delete: sendDelete,
+      }"
+    />
   </div>
 </template>
 
 <script>
-import TaskList from "../components/TaskList.vue";
-export default {
-  components: {
-    TaskList,
-  },
-  emits: ['restart', 'delete'],
-  props: {
+  import TaskList from '../components/TaskList.vue'
+  export default {
+    components: {
+      TaskList
+    },
+    emits: ['restart', 'delete'],
+    props: {
       tasks: {
         type: Array,
         default: []
@@ -29,7 +29,7 @@ export default {
         default: false
       }
     },
-    methods: {
+    methods: {      
       sendRestart (data) {
         this.$emit('restart', data)
       },
@@ -37,8 +37,9 @@ export default {
         this.$emit('delete', data)
       },
     },
-};
+  }
 </script>
 
 <style lang="scss" scoped>
+
 </style>

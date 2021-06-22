@@ -44,6 +44,24 @@
         } else {
           clearInterval(this.intervalEverySecond)
         }
+      },
+      errorMsg (newVal) {
+        // Notification en cas d'erreur
+        if (newVal !== null) {
+          this.$notify({
+            title: 'Attention',
+            message: this.errorMsg,
+            type: 'warning',
+            offset: 50,
+            duration: 3000,
+            onClose: () => {
+              // Pour que la même erreur puisse de nouveau être possible
+              if (this.errorMsg === newVal) {
+                this.errorMsg = null
+              }
+            }
+          });
+        }
       }
     },
     methods: {
@@ -58,6 +76,7 @@
         } else {
           this.errorMsg = null
         }
+
         // Début de la tâche
         this.isTaskInProgress = true
         this.startTime = Date.now()
@@ -69,11 +88,13 @@
           this.errorMsg = "Aucune tâche n'est en cours"
           return
         }
+
         // Envoie de la nouvelle tâche à ajouter
         this.$emit('newTask', {
           name: this.taskname,
           startTime: this.startTime,
         })
+
         // Fin de la tâche
         this.isTaskInProgress = false
         this.errorMsg = null
@@ -92,6 +113,7 @@
         if (this.isTaskInProgress) {
           this.stopTask()
         }
+
         // Lancement de la nouvelle tâche
         this.$nextTick(function () {
           this.taskname = newTaskname
@@ -115,6 +137,7 @@
   padding-left: 20px;
   box-sizing: border-box;
 }
+
 .actions {
   text-align: right;
   padding-right: 20px;
